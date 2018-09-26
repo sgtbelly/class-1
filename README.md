@@ -1,1 +1,1 @@
-# seattle-javascript-401n7
+# Seattle Javascript 401n7
