@@ -45,3 +45,12 @@
 - :30 - Computer Science || CSS / Generic React Component
 - Break
 - :60 - New Concept, Code Demo & Lab Prep
+
+## Working with our class repository
+- FORK It!
+- Set up a new remote `git remote add upstream https://github.com:codefellows/seattle-javascript-401n7.git'
+- Fetch our branches ... `git fetch upstream`
+- Prove it ... `git remote -v`
+- Every day, get the latest ...
+- `git rebase upstream/master`
+

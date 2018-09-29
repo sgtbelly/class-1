@@ -1,40 +1,24 @@
 ![cf](https://i.imgur.com/7v5ASc8.png) 02: Tools and Context
 ======
 
-## Submission Instructions
-* Work in a fork of this repository
-* Work in a branch on your fork
-* Write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-susan`
-* Open a pull request to this repository
-* Submit on canvas a question and observation, how long you spent, and a link to your pull request
-
-## Configuration
-Configure the root of your repository with the following files and directories. Thoughtfully name and organize any additional configuration or module files.
-* **README.md** - contains documentation
-* **.gitignore** - contains a [robust](http://gitignore.io) `.gitignore` file
-* **.eslintrc.json** - contains the course linter configuratoin
-* **.eslintignore** - contains the course linter ignore configuration
-* **.travis.yml** - contains your travis testing instructions
-* **package.json** - contains npm package config 
-  * jest and eslint must be dependencies
-  * create a `lint` script for running eslint `"lint": "eslint **/.js"`
-  * create a `test` script for running tests
-* **lib/** - contains module definitions
-* **\_\_test\_\_/** - contains unit tests
-
-## Feature Tasks
-
 #### List Module
-  * implement a List constructor using a constructor, factory, or class
+  * implement a full List constructor using a constructor function
   * implement the length property
-  * implement the `push()` and `pop()`, `slice()` methods on the List prototype
-  * implement `forEach()`, `map()`, `filter()`, and `reduce()` as pure methods on the List prototype
+  * implement the following methods on the list constructor
+    * `push()
+    * `pop()
+    * `shift()
+    * `unshift()
+    * `splice()
+    * `slice()
+    * `forEach()
+    * `map()
+    * `filter()
+    * `reduce()
   * Do not use any built-in array methods to do this
+  * Re-Implement with a factory function
+  * Re-Implement using a Class definition
   
-#### Stretch Goals
-  * implement `shift()`, `unshift()`, and `splice()` as methods on the List prototype
-  * Note that for these, because they mutate the list index, you will need to account for re-indexing the keys numerically from 0
-
 ## Testing
 Create a NodeJS module in the \_\_test\_\_/ directory named `list.test.js` that asserts the correctness of the list module.
 
