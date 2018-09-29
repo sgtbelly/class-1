@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1538183069916" clover="3.2.0">
+  <project timestamp="1538183069916" name="All files">
+    <metrics statements="13" coveredstatements="13" conditionals="11" coveredconditionals="11" methods="7" coveredmethods="7" elements="31" coveredelements="31" complexity="0" loc="13" ncloc="13" packages="1" files="2" classes="2">
+      <file name="arithmetic.js" path="/Users/john/codefellows/javascript-401/curriculum/01-node-ecosystem/lab/solution/lib/arithmetic.js">
+        <metrics statements="8" coveredstatements="8" conditionals="7" coveredconditionals="7" methods="5" coveredmethods="5"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="12" type="cond" truecount="3" falsecount="0"/>
+        <line num="20" count="12" type="stmt"/>
+        <line num="24" count="18" type="stmt"/>
+      </file>
+      <file name="greet.js" path="/Users/john/codefellows/javascript-401/curriculum/01-node-ecosystem/lab/solution/lib/greet.js">
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+      </file>
+    </metrics>
+  </project>
+</coverage>
