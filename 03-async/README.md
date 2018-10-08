@@ -69,12 +69,14 @@ The event loop is in charge of dequeueing callbacks from the V8 callback queue a
   * the event loop will watch the callback queue for new callbacks
   * when a callback is included it will immediately be dequeued and pushed onto the call stack
 
-### NodeJS Callback Pattern
+### Javascript Callback Pattern
 NodeJS made the decision to have all asynchronous events be handled using error first callbacks. The main advantage of this is that all asynchronous methods have a consistent interface. This means that when you are working with asynchronous NodeJS code, you can always assume how the callback is going to be formatted, making your life as a developer much easier!
 
 Having a consistent callback interface has also made it possible for libraries to be written that assist Javascript developers in handling complex async code!
 
-A callback says, "Hey, Javascript, you go ahead do some work. I don't care how long it takes, and I'm going to go ahead and keep on working ... but when you're all done, here's a function I want you to run."  That function is the callback, and it operates on a nicely standardized signature.
+**A callback says, "Hey, Javascript, you go ahead do some work. I don't care how long it takes, and I'm going to go ahead and keep on working ... but when you're all done, here's a function I want you to run."**
+
+That function is the callback, and it operates on a nicely standardized signature.
 
 ### Defining an Error First Callback
 * a callback is simply a function that is passed as an argument to another function
@@ -86,10 +88,10 @@ A callback says, "Hey, Javascript, you go ahead do some work. I don't care how l
     * not every NodeJS method passes data into the callback
     * in methods that do not resolve data, success is defined as a lack of an error
 
- ### Javascript Promise Pattern (promises)
+### Javascript Promise Pattern (promises)
  Promises are one way to manage Asynchronous actions. Like a callback, a promise allows you to execute some code and "move on", allowing for that code to take as long as it needs to run.  Unlike a callback, the syntax of a promise feels and reads a bit more "inline" ...
 
- A promise says, "Hey, Javascript, you go ahead and do some work.  I don't care how long it takes and I'm going to go ahead and keep working ... but let me know when you're done `.then()` give me the data and let me deal with it myself"
+ **A promise says, "Hey, Javascript, you go ahead and do some work.  I don't care how long it takes and I'm going to go ahead and keep working ... but let me know when you're done `.then()` give me the data and let me deal with it myself"**
 
 ```
 console.log('Start');
@@ -138,8 +140,6 @@ Buffers are NodeJS built-in constructors for working with binary data, also call
    console.log(data.readFloatLE()) // prints the floating point number stored in the first 4 bytes
  ```
 
-
-
 ### Asynchronous Testing
 Testing frameworks like **MochaJS**, **Jasmine**, and **Jest** support testing asynchronous code by giving us a callback to invoke when our assertions are done. Tests have two seconds to call a  `done` callback before a timeout error occurs. The testing frameworks will treat any value passed into the `done` callback as an error.
 
@@ -154,3 +154,26 @@ it('true should be true', (done) => {
   // invoking done here will be a false positive
 })
 ```
+
+in Jest, When testing a promise, the `done()` callback is unnecessary. Rather, you can simply return the promise with your `expect()` clause in the `.then()` or `.catch()` blocks and jest will handle it for you.
+
+``` javascript
+// example using done in "it" tests
+it('true should be true', () => {
+  return somePromiseFunction()
+    .then( result => {
+      expect(result).toBeTruthy();
+    })
+})
+```
+
+### Mock Testing
+When testing outside functionality (such as a server, database, or a filesystem), it's customary to "mock" that functionality rather than use the real thing.
+
+* Your tests should never pass or fail as a result of a failure or unavailability of an external system.
+* e.g. If you are testing a function that processes the JSON that it gets from a remote API, your test should be focused on it properly processing data, not the availability of that data.
+* So ... you typically "mock" the remote resource and get yourself some fake data to test with.
+
+[Mock Functions](https://jestjs.io/docs/en/mock-functions)
+[Manual Mocking](https://jestjs.io/docs/en/manual-mocks)
+
