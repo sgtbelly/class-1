@@ -10,8 +10,6 @@
 * Students will be able to work with raw data using Buffers
 * Students will be able to test asynchronous code using a BDD testing framework
 
-## Outline
-
 ### Javascript Runtime
 There are many Javascript runtimes. V8 is the name of the runtime used in the Chrome web browser and in NodeJS. V8 will be used in the following descriptions of how a Javascript runtime works but other browsers and Javascript environments have the same behaviors.
 
