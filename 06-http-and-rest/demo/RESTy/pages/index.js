@@ -1,6 +1,15 @@
 import React from 'react';
 import superagent from 'superagent';
-import JSONPretty  from 'react-json-pretty';
+
+// This JSON pretty component requires the window to work
+// When we're using next.js to render on the server, we need
+// to use next.js' dynamic loader to delay it rendering.
+// Otherwise, this would be:
+//  import ReactJson from ('react-json-view')
+import dynamic from 'next/dynamic'
+const ReactJson = dynamic(() => import('react-json-view'), {
+  ssr: false
+});
 
 export default class Index extends React.Component {
 
@@ -9,8 +18,8 @@ export default class Index extends React.Component {
     this.state = {
       url: '',
       method: '',
-      header: '',
-      body: '',
+      header: {},
+      body: {}
     };
 
   }
@@ -24,8 +33,9 @@ export default class Index extends React.Component {
     event.preventDefault();
     superagent.get(this.state.url)
       .then( response => {
-        let body = JSON.stringify(response.body);
+        let body = response.body;
         this.setState({body});
+        console.log(this.state);
       })
   };
 
@@ -37,7 +47,7 @@ export default class Index extends React.Component {
         <form onSubmit={this.callAPI}>
           <input placeholder="URL" onChange={this.changeURL}/>
         </form>
-        <JSONPretty json={this.state.body}></JSONPretty>
+        <ReactJson src={this.state.body} />
       </section>
     );
   }

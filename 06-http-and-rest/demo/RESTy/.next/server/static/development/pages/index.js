@@ -3,6 +3,12 @@ module.exports =
 /******/ 	// The module cache
 /******/ 	var installedModules = require('../../../ssr-module-cache.js');
 /******/
+/******/ 	// object to store loaded chunks
+/******/ 	// "0" means "already loaded"
+/******/ 	var installedChunks = {
+/******/ 		"static/development/pages/index.js": 0
+/******/ 	};
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -86,6 +92,13 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	// uncaught error handler for webpack runtime
+/******/ 	__webpack_require__.oe = function(err) {
+/******/ 		process.nextTick(function() {
+/******/ 			throw err; // catch this error by using import().catch()
+/******/ 		});
+/******/ 	};
+/******/
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 3);
@@ -107,8 +120,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! superagent */ "superagent");
 /* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(superagent__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_json_pretty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-json-pretty */ "react-json-pretty");
-/* harmony import */ var react_json_pretty__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_json_pretty__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/dynamic */ "next/dynamic");
+/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_dynamic__WEBPACK_IMPORTED_MODULE_2__);
 var _jsxFileName = "/Users/john/codefellows/classes/401n7/class/06-http-and-rest/demo/RESTy/pages/index.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -132,8 +145,24 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+ // This JSON pretty component requires the window to work
+// When we're using next.js to render on the server, we need
+// to use next.js' dynamic loader to delay it rendering.
+// Otherwise, this would be:
+//  import ReactJson from ('react-json-view')
 
 
+var ReactJson = next_dynamic__WEBPACK_IMPORTED_MODULE_2___default()(function () {
+  return Promise.resolve(/*! import() */).then(__webpack_require__.t.bind(null, /*! react-json-view */ "react-json-view", 7));
+}, {
+  ssr: false,
+  loadableGenerated: {
+    webpack: function webpack() {
+      return [/*require.resolve*/(/*! react-json-view */ "react-json-view")];
+    },
+    modules: ['react-json-view']
+  }
+});
 
 var Index =
 /*#__PURE__*/
@@ -158,19 +187,21 @@ function (_React$Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "callAPI", function (event) {
       event.preventDefault();
       superagent__WEBPACK_IMPORTED_MODULE_1___default.a.get(_this.state.url).then(function (response) {
-        var body = JSON.stringify(response.body);
+        var body = response.body;
 
         _this.setState({
           body: body
         });
+
+        console.log(_this.state);
       });
     });
 
     _this.state = {
       url: '',
       method: '',
-      header: '',
-      body: ''
+      header: {},
+      body: {}
     };
     return _this;
   }
@@ -181,14 +212,14 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 36
+          lineNumber: 46
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.callAPI,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 37
+          lineNumber: 47
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -196,14 +227,14 @@ function (_React$Component) {
         onChange: this.changeURL,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 38
+          lineNumber: 48
         },
         __self: this
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_json_pretty__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        json: this.state.body,
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ReactJson, {
+        src: this.state.body,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 40
+          lineNumber: 50
         },
         __self: this
       }));
@@ -229,6 +260,17 @@ module.exports = __webpack_require__(/*! ./pages/index.js */"./pages/index.js");
 
 /***/ }),
 
+/***/ "next/dynamic":
+/*!*******************************!*\
+  !*** external "next/dynamic" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("next/dynamic");
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -240,14 +282,14 @@ module.exports = require("react");
 
 /***/ }),
 
-/***/ "react-json-pretty":
-/*!************************************!*\
-  !*** external "react-json-pretty" ***!
-  \************************************/
+/***/ "react-json-view":
+/*!**********************************!*\
+  !*** external "react-json-view" ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("react-json-pretty");
+module.exports = require("react-json-view");
 
 /***/ }),
 
