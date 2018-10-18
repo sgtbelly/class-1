@@ -1,42 +1,45 @@
 'use strict';
 
-const superagent = require('superagent');
+// 3rd Party Libs
 const express = require('express');
-const app = express();
+const methodOverride = require('method-override');
 
-// Use this as a talking point about environment variables
-const PORT = process.env.PORT || 8080;
-const API = 'http://localhost:3000';
+// Esoteric Libs
+const categoryRoutes = require('./category-routes.js');
+const siteRoutes = require('./site-routes.js');
+
+const app = express();
 
 // Set the view engine for templating
 app.set('view engine', 'ejs');
 
+// Middleware
+app.use(express.urlencoded({extended:true}));
+app.use( methodOverride( (request,response) => {
+  if( request.body && typeof request.body === 'object' && '_method' in request.body) {
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}));
+
 // Statics
 app.use( express.static('./public') );
 
-// Routes
-app.get('/', homePage);
-app.get('/list', listPage);
+// Dynamic Routes
+app.use(siteRoutes);
+app.use(categoryRoutes);
 
-function homePage(request, response) {
-  response.render('site', {page: './pages/index', title:'Welcome Home'});
-}
 
-function listPage(request, response) {
-  superagent.get( `${API}/api/v1/categories`)
-    .then(data => {
-      // We could just send data.body to EJS, but what fun is that?
-      // Lets reduce it down and change shape a little bit and send that out ;)
-      let rawData = data.body;
-      let listings = rawData.reduce( (list,val) => {
-        list.push( {category:val.name} );
-        return list;
-      }, []);
-      response.render('site', {page: './pages/list', title:'Listings', items: listings});
-    })
-    .catch( error => {
-      response.render('site', {page: './pages/error', title:'Error', error:error});
-    });
-}
+module.exports = {
+  start: port => {
+    let PORT = port || process.env.PORT || 8080;
+    app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+  },
+};
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+
+
+
+
